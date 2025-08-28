@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "text-regular";
+  src: url(/src/fonts/Kanit-Regular.ttf); }
+
+@font-face {
+  font-family: "text-title";
+  src: url(/src/fonts/Kanit-Bold.ttf); }
+
+:root {
+  --font-title: "text-title";
+  --font-regular: "text-regular"; }
+* { font-family: var(--font-regular); }
+.font-title { font-family: var(--font-title); }
+.size { font-size: 1.7rem !important; }
+.activity-input:hover + .edit-activity-button {
+  opacity: 1;
+  display: flex;
+}

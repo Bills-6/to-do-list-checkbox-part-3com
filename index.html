@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=7" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<link rel="stylesheet" href="style.css"/>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	<title>to do list sederhana berbasis checkbox full - part 3</title>
+</head>
+<body class="transition-[background]" data-theme="light">
+	<h1 class="font-title text-[1.6rem] md:text-[1.8rem] lg:text-[2rem] text-center py-4 text-gray-500">My Activity</h1>
+
+	<div class="container mx-auto p-2 relative">
+		<nav class="h-[60px] bg-yellow-300 rounded-md flex items-center justify-between px-4 md:px-6 lg:px-8 shadow-sm shadow-gray-300" id="navigation">
+			<div class="undo-redo flex items-center gap-2">
+				<span class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] flex items-center justify-center hover:cursor-pointer active:scale-[0.9]" id="undo-button">
+					<i class="material-symbols-outlined size pointer-events-none text-gray-600">undo</i>
+				</span>
+				<span class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] flex items-center justify-center hover:cursor-pointer active:scale-[0.9]" id="redo-button">
+					<i class="material-symbols-outlined size pointer-events-none text-gray-600">redo</i>
+				</span>
+			</div>
+
+			<div class="control flex items-center gap-2">
+				<span class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] flex items-center justify-center hover:cursor-pointer active:scale-[0.9]" id="create-button">
+					<i class="material-symbols-outlined size pointer-events-none">add_notes</i>
+				</span>
+				<span class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] flex items-center justify-center hover:cursor-pointer active:scale-[0.9]" id="filter-button">
+					<i class="material-symbols-outlined size pointer-events-none">filter_alt</i>
+				</span>
+				<span class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] flex items-center justify-center hover:cursor-pointer active:scale-[0.9]" id="remove-forever-button">
+					<i class="material-symbols-outlined size pointer-events-none">delete_forever</i>
+				</span>
+				<span class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] flex items-center justify-center hover:cursor-pointer active:scale-[0.9] overflow-hidden" id="mode-button">
+					<i class="material-symbols-outlined size pointer-events-none transition-[scale]" id="icon-light">sunny</i>
+					<i class="material-symbols-outlined size pointer-events-none translate-x-[20px] transition-[translate-x] duration-150" style="display: none;" id="icon-dark">moon_stars</i>
+				</span>
+			</div>
+		</nav>
+
+		<!-- [< created panel >] -->
+		 <div class="absolute w-[95vw] lg:w-[70vw] p-3 md:p-5 lg:p-10 pt-0 lg:pt-5 rounded-md top-[100px] left-[50%] translate-x-[-50%] shadow-sm shadow-gray-300 bg-gray-300 hidden scale-0 transition-[scale] z-10" data-status="closed" id="created-panel">
+			<div class="head-created-panel py-2 flex items-center justify-between mb-3">
+				<span class="lg:text-[1.6rem] relative after:absolute after:content-[''] after:w-[100%] after:h-[2px] after:bg-gray-900 after:bottom-0 after:left-0 text-lg" id="title-panel">Created todo</span>
+				<button class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] flex items-center justify-center hover:cursor-pointer active:scale-[0.9]" id="close-created-panel-button">
+					<i class="material-symbols-outlined size" id="icon-close">close</i>
+				</button>
+			</div>
+
+			<div class="body-created-panel py-1">
+				<div class="input-wrapper flex flex-col gap-2 mb-3 relative">
+					<label class="text-md lg:text-[1.4rem] relative after:content-['*'] after:absolute after:text-red-600 after:top-[50%] after:translate-y-[-40%] after:text-[2rem] after:ms-2" for="name-todo-input">Name activity</label>
+					<input class="bg-gray-200 block w-full h-[45px] lg:h-[50px] md:h-[40px] rounded-md focus:outline-none px-2 transition-[background]" placeholder="type here..." type="text" id="name-todo-input" />
+				</div>
+				<div class="input-wrapper flex flex-col gap-2 relative">
+					<label class="text-md lg:text-[1.4rem]" for="id-todo-input">Id activity</label>
+					<input class="bg-gray-200 block w-full h-[45px] lg:h-[50px] md:h-[40px] rounded-md focus:outline-none px-2 transition-[background]" placeholder="type here... (opsional)" type="text" id="id-todo-input" maxlength="20" />
+				</div>
+
+				<button class="w-[100px] h-[40px] bg-gray-100 mt-4 ms-auto flex items-center justify-center rounded-md hover:bg-gray-200 hover:cursor-pointer" id="confirm-create-button">Create</button>
+			</div>
+		 </div>
+
+		 <!-- [< filter panel >] -->
+		<div class="absolute w-[95vw] lg:w-[70vw] bg-pink-200 top-[100px] left-[50%] translate-x-[-50%] rounded-md  p-3 md:p-5 lg:p-10 pt-0 lg:pt-5">
+			
+		</div>
+
+		 <ul class="py-3 mt-7 flex flex-col gap-3" id="todolist-wrapper">
+
+		 </ul>
+	</div>
+	<script type="module" src="components/darkMode.js"></script>
+	<script type="module" src="components/createdTodo.js"></script>
+	<script type="module" src="components/validation.js"></script>
+	<script type="module" src="components/render.js"></script>
+	<script type="module" src="components/filter.js"></script>
+</body>
+</html>
