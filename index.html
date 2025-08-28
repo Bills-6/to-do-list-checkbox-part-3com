@@ -65,8 +65,22 @@
 		 </div>
 
 		 <!-- [< filter panel >] -->
-		<div class="absolute w-[95vw] lg:w-[70vw] bg-pink-200 top-[100px] left-[50%] translate-x-[-50%] rounded-md  p-3 md:p-5 lg:p-10 pt-0 lg:pt-5">
-			
+		<div class="absolute w-[95vw] lg:w-[70vw] bg-gray-300 top-[100px] left-[50%] translate-x-[-50%] rounded-md  p-3 md:p-5 lg:p-10 pt-0 lg:pt-5 hidden scale-0 transition-[scale]" data-visibilityStatus="closed" id="filter-panel">
+			<div class="head-panel py-1 flex items-center justify-between mb-5">
+				<span class="block text-center pt-2 mb-2 text-lg">Filter panel</span>
+				<span class="close-panel w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] flex items-center justify-center hover:cursor-pointer active:scale-[0.9]">
+					<i class="material-symbols-outlined size">close</i>
+				</span>
+			</div>
+
+			<div class="flex items-center gap-3 mb-3">
+				<input class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px]" type="checkbox" id="complete-activity" />
+				<span class="text-md md:text-lg">completed activities</span>
+			</div>
+			<div class="flex items-center gap-3">
+				<input class="w-[30px] h-[30px] lg:w-[40px] lg:h-[40px]" type="checkbox" id="uncomplete-activity" />
+				<span class="text-md md:text-lg">unfinished activities</span>
+			</div>
 		</div>
 
 		 <ul class="py-3 mt-7 flex flex-col gap-3" id="todolist-wrapper">

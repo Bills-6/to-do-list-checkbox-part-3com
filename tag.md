@@ -11,6 +11,7 @@ antaranya:
 - fitur edit todo
 - todo memiliki id (yang nantinya bisa difilter) dan tanggal pembuatannya
 - validasi input saat pembuatan todo
+- filter sudah atau tidaknya
 
 
 
