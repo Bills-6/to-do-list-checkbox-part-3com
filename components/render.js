@@ -127,14 +127,19 @@ export function renderTask(data = stack) {
 
 		// [< delete this activity >]
 		deleteButton.addEventListener("click", function() {
-			// let thisIsDeleted = stack.splice(index, 1);
-			// saveStackToLocalStorage();
+			redoStack = [];
 
-			// undoStack.push(thisIsDeleted);
+			const isRemovedItem = stack.splice(index, 1);
+			renderTask();
+			saveStackToLocalStorage();
+
+			undoStack.push(isRemovedItem);
+			updateColorIcon();
+			saveRemovedToSessionStorage();
+
 		});
 	});
 }
-
 	class Data {
 		constructor(data, id) {
 			this.data = data;
@@ -152,7 +157,7 @@ buttonConfirm.addEventListener("click",
 
 		const validityId = valueId === ""
 			? "id tidak diberikan"
-			: valueId
+			: valueId;
 		
 		if (valueActivity !== "") {
 			stack.push(new Data(valueActivity, validityId));
@@ -168,7 +173,13 @@ buttonConfirm.addEventListener("click",
 			const takeThat = this.localStorage.getItem("stack");
 			stack = [...JSON.parse(takeThat)];
 			renderTask();
-			console.log(stack)
+		}
+
+		if (this.sessionStorage.getItem("removed") !== '[]') {
+			const takethat = this.sessionStorage.getItem("removed");
+
+			undoStack.push(JSON.parse(takethat));
+			updateColorIcon();
 		}
 	});
 
@@ -178,9 +189,12 @@ deleteForeverButton.addEventListener("click", () => {
 	stack = [];
 	saveStackToLocalStorage();
 	renderTask();
-});
 
-console.log(localStorage)
+	redoStack = [];
+	undoStack = [];
+	saveRemovedToSessionStorage();
+	updateColorIcon();
+});
 
 function saveStackToLocalStorage() {
 	localStorage.setItem("stack", JSON.stringify(stack));
@@ -216,3 +230,30 @@ const undoIcon = document.getElementById("undo-icon"),
 function saveRemovedToSessionStorage() {
 	sessionStorage.setItem("removed", JSON.stringify(undoStack));
 }
+
+// [< undo button >]
+const undoButton = document.getElementById("undo-button");
+undoButton.addEventListener("click", function() {
+	if (undoStack.length > 0) {
+		const isReturnUndo = undoStack.pop();
+		redoStack.push(isReturnUndo);
+		updateColorIcon();
+		saveRemovedToSessionStorage();
+
+		stack.push(...isReturnUndo);
+		renderTask();
+		saveStackToLocalStorage();
+	}
+});
+
+// [< redo button >]
+const redoButton = document.getElementById("redo-button");
+redoButton.addEventListener("click", function() {
+	if (redoStack.length > 0) {
+		const lastRemovedRedo = redoStack.pop();
+		undoStack.push(lastRemovedRedo);
+		updateColorIcon();
+		saveRemovedToSessionStorage();
+	}
+});
+console.log(redoStack)
