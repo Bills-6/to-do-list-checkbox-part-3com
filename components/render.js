@@ -16,7 +16,7 @@ const sytling = {
 	bodySection: {
 		bodytodoStyle: ['body-todo', 'py-1', 'flex', 'flex-col', 'lg:flex-row', 'items-center', 'gap-3'],
 		todoActivityStyle: ['todo-activity-wrapper', 'w-full', 'lg:grow', 'relative'],
-		activityInputStyle: ['activity-input', 'w-full', 'resize-none', 'text-[1.3rem]', 'lg:text-[1.6rem]', 'py-3'],
+		activityInputStyle: ['activity-input', 'w-full', 'resize-none', 'text-[1.3rem]', 'lg:text-[1.6rem]', 'py-3', 'overflow-hidden'],
 		editActivityButtonStyle: ['edit-activity-button', 'w-[30px]', 'h-[30px]', 'lg:w-[40px]', 'lg:h-[40px]', 'hidden', 'items-center', 'justify-center', 'absolute', 'right-[10px]', 'top-[50%]', 'translate-y-[-50%]', 'hover:cursor-pointer', 'active:scale-[0.9]', 'opacity-0', 'hover:opacity-100', 'hover:flex'],
 		iconEditActivityStyle: ['material-symbols-outlined', 'size'],
 
@@ -124,6 +124,14 @@ export function renderTask(data = stack) {
 				saveStackToLocalStorage();
 			}
 		});
+
+		// [< delete this activity >]
+		deleteButton.addEventListener("click", function() {
+			// let thisIsDeleted = stack.splice(index, 1);
+			// saveStackToLocalStorage();
+
+			// undoStack.push(thisIsDeleted);
+		});
 	});
 }
 
@@ -180,4 +188,31 @@ function saveStackToLocalStorage() {
 function autoResize(Node) {
 	Node.style.height = "0";
 	Node.style.height = `${Node.scrollHeight}px`;
+}
+ 
+// [< undo & redo icon >]
+const undoIcon = document.getElementById("undo-icon"),
+	redoIcon = document.getElementById("redo-icon");
+
+	function updateColorIcon() {
+		// undo icon style
+		if (undoStack.length > 0) {
+			undoIcon.classList.replace(
+				"text-gray-600", "text-gray-900" );
+		} else {
+			undoIcon.classList.replace(
+				"text-gray-900", "text-gray-600");
+		}
+		
+		// redo icon style
+		if (redoStack.length > 0) {
+			redoIcon.classList.replace(
+				"text-gray-600", "text-gray-900");
+		} else {
+			redoIcon.classList.replace(
+				"text-gray-900", "text-gray-600");
+		}
+	}
+function saveRemovedToSessionStorage() {
+	sessionStorage.setItem("removed", JSON.stringify(undoStack));
 }
