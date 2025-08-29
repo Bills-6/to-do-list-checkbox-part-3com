@@ -1,3 +1,5 @@
+import { renderTask, stack, redoStack, undoStack } from "./render.js";
+
 const buttonFilter = document.getElementById("filter-button");
 const filterPanel = document.getElementById("filter-panel");
 
@@ -42,4 +44,30 @@ document.addEventListener("click", (e) => {
 	if (!filterPanel.contains(e.target) && !buttonFilter.contains(e.target)) {
 		isPanelVisibility("closed");
 	}
+});
+
+
+// filter complete todo script
+const completeTodofilter = document.getElementById("complete-activity-filter");
+
+completeTodofilter.addEventListener("change", 
+	function() {
+		if (this.checked) {
+			let isFilter = stack.filter((todo) => {
+				return todo.check.every(value => value === true);
+			});
+			renderTask(isFilter);
+		} else { renderTask(); }
+	});
+
+// filter uncomplete todo script
+const unCompletetodoFilter = document.getElementById("uncomplete-activity-filter");
+
+unCompletetodoFilter.addEventListener("change", function() {
+	if (this.checked) {
+		let isFilterUncomplete = stack.filter((todo) => {
+			return todo.check.some(value => value === false);
+		});
+		renderTask(isFilterUncomplete);
+	} else { renderTask(); }
 });

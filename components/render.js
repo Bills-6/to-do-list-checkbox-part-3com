@@ -1,9 +1,9 @@
 import { nameActivityInput } from './validation.js';
 import { doorPanel } from './createdTodo.js';
 
-let stack = [];
-let undoStack = [];
-let redoStack = [];
+export let stack = [];
+export let undoStack = [];
+export let redoStack = [];
 
 const ul = document.getElementById("todolist-wrapper");
 const sytling = {
@@ -26,7 +26,7 @@ const sytling = {
 	}
 }
 
-function renderTask(data = stack) {
+export function renderTask(data = stack) {
 	ul.innerHTML = null;
 
 	data.forEach((todo, index) => {
