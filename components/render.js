@@ -129,14 +129,13 @@ export function renderTask(data = stack) {
 		deleteButton.addEventListener("click", function() {
 			redoStack = [];
 
-			const isRemovedItem = stack.splice(index, 1);
+			const isRemovedItem = stack.splice(index, 1)[0];
 			renderTask();
 			saveStackToLocalStorage();
 
-			undoStack.push(isRemovedItem);
+			undoStack.push({ item: isRemovedItem, index });
 			updateColorIcon();
 			saveRemovedToSessionStorage();
-
 		});
 	});
 }
@@ -230,19 +229,19 @@ const undoIcon = document.getElementById("undo-icon"),
 function saveRemovedToSessionStorage() {
 	sessionStorage.setItem("removed", JSON.stringify(undoStack));
 }
-
 // [< undo button >]
 const undoButton = document.getElementById("undo-button");
 undoButton.addEventListener("click", function() {
 	if (undoStack.length > 0) {
-		const isReturnUndo = undoStack.pop();
-		redoStack.push(isReturnUndo);
-		updateColorIcon();
-		saveRemovedToSessionStorage();
+		const { item, index } = undoStack.pop();
 
-		stack.push(...isReturnUndo);
+		redoStack.push({index, item})
+
+		stack.splice(index, 0, item);
 		renderTask();
 		saveStackToLocalStorage();
+		updateColorIcon();
+		saveRemovedToSessionStorage();
 	}
 });
 
@@ -250,10 +249,20 @@ undoButton.addEventListener("click", function() {
 const redoButton = document.getElementById("redo-button");
 redoButton.addEventListener("click", function() {
 	if (redoStack.length > 0) {
-		const lastRemovedRedo = redoStack.pop();
-		undoStack.push(lastRemovedRedo);
+		const { item, index } = undoStack.pop();
+
+		if (stack[index] && stack[index].data === item.data) {
+			stack.splice(index, 1);
+		} else {
+			const fallbackIndex = stack.findIndex(i => i === item);
+			if (fallbackIndex !== -1) stack.splice(fallbackIndex, 1);
+		}
+
+		undoStack.push({ item, index});
+		renderTask();
+		saveStackToLocalStorage();
 		updateColorIcon();
 		saveRemovedToSessionStorage();
-	}
+ 	}
 });
 console.log(redoStack)
